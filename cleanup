@@ -1,5 +1,9 @@
 #!/bin/bash
 
-rg 'REDFLAG' |
-    sed -En 's/(.*\/[[:digit:]]+):.*/\1/p' |
-    xargs rm
+flags=$(rg -uu 'REDFLAG' |
+	    sed -En 's/(.*\/[[:digit:]]+):.*/\1/p')
+
+for k in $flags; do
+    echo "Found malicious file: $k"
+    rm $k
+done

